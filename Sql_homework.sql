@@ -2,34 +2,34 @@ USE sakila;
 
 -- 1a. Display the first and last names of all actors from the table `actor`.--
 SELECT first_name as 'Actor: First name', last_name as 'Actor: Last name'
-    FROM actor
-    ORDER BY first_name ASC;
+FROM actor
+ORDER BY first_name ASC;
 
 -- 1b. Display actor first/last name, single column, upper case letters. `Actor Name`--
 SELECT CONCAT (UPPER(first_name),' ', UPPER(last_name)) as 'Actor Name'
-    FROM actor
-    ORDER BY first_name ASC;
+FROM actor
+ORDER BY first_name ASC;
 
 -- 2a. Find the actor ID number, first name ("JOE"), last name --
 SELECT actor_ID, first_name, last_name FROM actor
-    WHERE first_name='JOE';
+WHERE first_name='JOE';
 
 -- 2b. All actors, last name contain `GEN`--
 SELECT first_name as 'Actor: First name', last_name as 'Actor: Last name contains "GEN"'
-    FROM actor
-    WHERE last_name LIKE '%GEN%'
-    ORDER BY last_name ASC;
+FROM actor
+WHERE last_name LIKE '%GEN%'
+ORDER BY last_name ASC;
 
 -- 2c. All actors, last names contain `LI`. Order the rows by last name and first name, in that order:
 SELECT last_name as 'Actor: Last name contains "LI"', first_name as 'Actor: First name' 
-    FROM actor
-    WHERE last_name LIKE '%LI%'
-    ORDER BY last_name ASC;
+FROM actor
+WHERE last_name LIKE '%LI%'
+ORDER BY last_name ASC;
  
 -- 2d. Using `IN`, display `country_id`/`country` columns Afghanistan, Bangladesh, and China:
 SELECT country_id, country
-    FROM country
-    WHERE country IN ('Afghanistan','Bangladesh', 'China');
+FROM country
+WHERE country IN ('Afghanistan','Bangladesh', 'China');
 
 -- 3a. Create a column in the table `actor` named `description` and use the data type `BLOB` 
 ALTER TABLE actor
@@ -41,7 +41,7 @@ DROP description;
 
 -- 4a. List the last names of actors, as well as how many actors have that last name.
 SELECT last_name as 'Actor: Last name', COUNT(last_name) as 'Count'
-    FROM actor
+FROM actor
     GROUP BY last_name
     ORDER BY COUNT(last_name) DESC;
 
@@ -151,21 +151,21 @@ INNER JOIN country
 WHERE country = "Canada";
 
 -- 7d. Identify all movies categorized as _family_ films.
-SELECT film
+SELECT film.title as 'Movie'
 FROM film
 WHERE film_id IN
 (
   SELECT film_id
   FROM film_category
-  WHERE categor_id IN
+  WHERE category_id IN
   (
    SELECT category_id
    FROM category
    WHERE name = 'Family'
   )
 );
--- 7e. Display the most frequently rented movies in descending order.
-SELECT film.title as 'Movie Title', count(rental.inventory_id) as 'Rental Frequency'
+-- 7e. CHECK Display the most frequently rented movies in descending order.
+SELECT film.title as 'Movie Title', count(rental.rental_id) as 'Rental Frequency'
 FROM rental
     INNER JOIN inventory
         ON rental.inventory_id =inventory.inventory_id
