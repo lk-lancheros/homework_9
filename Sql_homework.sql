@@ -64,42 +64,44 @@ GROUP BY last_name
 HAVING COUNT(last_name)>1
 ORDER BY COUNT(last_name) DESC, last_name ASC;
 
--- 4c. The actor `HARPO WILLIAMS` was accidentally entered in the `actor` table as `GROUCHO WILLIAMS`. 
+-- 4c. The actor `HARPO WILLIAMS` was accidentally entered in the `actor` table as `GROUCHO WILLIAMS`. --
 
 UPDATE actor
-SET first_name ='HARPO' , last_name = 'WILLIAMS'
+SET first_name ='HARPO'
 WHERE first_name ='GROUCHO' AND last_name = 'WILLIAMS';
 
--- Check to see that change was made
+-- Check to see that change was made --
 
 SELECT * FROM actor
 WHERE first_name='HARPO';
 
--- 4d. Perhaps we were too hasty in changing `GROUCHO` to `HARPO`. It turns out that `GROUCHO` was the correct name after all! In a single query, if the first name of the actor is currently `HARPO`, change it to `GROUCHO`.
+-- 4d. Perhaps we were too hasty in changing `GROUCHO` to `HARPO`. --
+-- It turns out that `GROUCHO` was the correct name after all! --
+-- In a single query, if the first name of the actor is currently `HARPO`, change it to `GROUCHO`. --
 
 UPDATE actor
-SET first_name ='GROUCHO' , last_name = 'WILLIAMS'
+SET first_name ='GROUCHO'
 WHERE first_name ='HARPO' AND last_name = 'WILLIAMS';
 
--- Check to see that change was made
+-- Check to see that change was made --
 
 SELECT * FROM actor
 WHERE first_name='GROUCHO';
 
--- 5a. You cannot locate the schema of the `address` table. Which query would you use to re-create it?
+-- 5a. You cannot locate the schema of the `address` table. Which query would you use to re-create it? --
 
 SELECT *
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME='address';
 
--- 6a. `JOIN`, display staff first and last names, address. Use tables `staff` and `address`:
+-- 6a. `JOIN`, display staff first and last names, address. Use tables `staff` and `address`: --
 
 SELECT staff.first_name, staff.last_name, address.address
 FROM staff
     LEFT JOIN address 
     ON staff.address_id=address.address_id;
 
--- 6b.Use `JOIN` to display the total amount rung up or sum(amount) from table 'payment' 
+-- 6b.Use `JOIN` to display the total amount rung up or sum(amount) from table 'payment' --
 -- group by each staff member in August of 2005. Use tables `staff` and `payment`. --
 
 SELECT staff.first_name as 'Staff: First name', staff.last_name as 'Staff: Last name',  
@@ -144,7 +146,7 @@ GROUP BY payment.customer_id
 ORDER BY customer.last_name ASC;
 
 -- 7a. Use subqueries to display movie titles starting w/`K` and `Q` whose language is English. --
--- Use tables 'film' and 'langauge'.
+-- Use tables 'film' and 'langauge'. --
 
 SELECT film.title
 FROM film
@@ -174,7 +176,7 @@ WHERE actor_id IN
 )
 ORDER BY last_name ASC;
 
--- 7c. Get names and email addresses of all Canadian customers (country=Canada from table country) 
+-- 7c. Get names and email addresses of all Canadian customers (country=Canada from table country) --
 -- and use joins. Use tables 'customer', 'address', 'city', 'country' --
 
 SELECT first_name, last_name, email
